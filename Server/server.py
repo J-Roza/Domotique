@@ -2,8 +2,8 @@ from flask import Flask
 from flask import render_template
 from yeelight import Bulb, RGBTransition, Flow, transitions, SleepTransition
 
-bulb0 = Bulb("192.168.1.181")
-bulb1 = Bulb("192.168.1.182")
+bulb0 = Bulb("192.168.1.181", auto_on=True)
+bulb1 = Bulb("192.168.1.182", auto_on=True)
 
 app = Flask(__name__)
 
@@ -11,9 +11,24 @@ app = Flask(__name__)
 def index():    
     return (render_template('index.html'), 200)
 
+@app.route('/bureau')
+def bureau():    
+    return (render_template('bureau.html'), 200)
+
 @app.route('/test_page')
 def test():
     return render_template('test_page.html')
+
+@app.route('/new')
+def new():
+    return render_template('new.html')
+
+@app.route('/new_2')
+def new_2():
+    return render_template('new_2.html')
+
+
+
 
 
 
@@ -76,6 +91,9 @@ def start_yeelight(id_bulb=None):
             bulb0.turn_on(effect="sudden")
         elif id_bulb == 1:
             bulb1.turn_on(effect="sudden")
+        elif id_bulb == 2:
+            bulb0.turn_on(effect="sudden")
+            bulb1.turn_on(effect="sudden")
     return ('', 204)
 
 
@@ -84,13 +102,27 @@ def start_yeelight(id_bulb=None):
 def stop_yeelight(id_bulb=None):
     if id_bulb != None:
         if id_bulb == 0:
-            bulb0.turn_off()
+            bulb0.turn_off(effect="sudden")
         elif id_bulb == 1:
-            bulb1.turn_off()
+            bulb1.turn_off(effect="sudden")
+        elif id_bulb == 2:
+            bulb0.turn_off(effect="sudden")
+            bulb1.turn_off(effect="sudden")
     return ('', 204)
 
 
-#
+#check the bulb’s state by reading its properties
+@app.route('/check_state_yeelight/')
+def check_state():
+    properties = {}
+    properties["bulb0"] = bulb0.get_properties()
+    properties["bulb1"] = bulb1.get_properties()
+    return {"properties": properties}, 200
+
+
+
+
+#Set RGB Color
 @app.route('/start_color_cycle_yeelight/<int:id_bulb>/<rgb_value>')
 def rgb_yeelight(id_bulb=None, rgb_value="ffffff"):
    
@@ -110,6 +142,8 @@ def rgb_yeelight(id_bulb=None, rgb_value="ffffff"):
             bulb1.set_rgb(r_color, g_color, b_color, effect="sudden")
 
     return ('', 204)
+
+
 
 
 if __name__ == "__main__":

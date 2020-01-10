@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+   
+    <head>
+        <meta charset="utf8">
+        <title>NEW</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css') }}">
+    </head>
+    <body>
+        <div class="center">
+            <input type="checkbox" onchange="checkFluency()" id="fluency">
+
+
+            <script>   
+                 
+                function check_state()
+                {
+                    var url = "/check_state_yeelight/";
+                    fetch(url).then(function(response) 
+                    {
+                        if (response.status !== 200) 
+                        {
+                            console.log(`Looks like there was a problem. Status code: ${response.status}`);
+                            return;
+                        }
+                        response.json().then(function(data) 
+                        {
+                            console.log(data.properties.bulb0.power, data.properties.bulb1.power);
+                            //TODO use data to set button's state 
+                        });
+                    })
+                        .catch(function(error) 
+                        {
+                            console.log("Fetch error: " + error);
+                        });
+                };
+
+                window.onload = check_state();
+                         
+                function checkFluency()                
+                {
+                    var checkbox = document.getElementById('fluency');
+                    
+
+                    if (checkbox.checked == true) 
+                    {
+                        var req = new XMLHttpRequest();
+                        var url = "/start_yeelight/2";
+                        req.open("GET", url, true);
+                        req.send(null);                        
+                    }
+                    else 
+                    {
+                        var req = new XMLHttpRequest();
+                        var url = "/stop_yeelight/2";
+                        req.open("GET", url, true);
+                        req.send(null);
+                    }
+                }
+            </script>
+
+        <br>
+        <br> 
+        <br> 
+        <a href="/"><button type="button">Retour</button></a> 
+    </body> 
+
+</html>
