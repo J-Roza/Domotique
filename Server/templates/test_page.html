@@ -1,0 +1,62 @@
+<!doctype html>
+    
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/server.css') }}">
+</head>
+<body>
+
+
+    <h1>test</h1>
+    <br>
+    <br>
+
+    <a href="/start_color_cycle_yeelight/0"><button type="button">Cycle Bureau</button></a>
+    <a href="/start_color_cycle_yeelight/1"><button type="button">Cycle Bureau Etagère</button></a>
+    <a href="/start_color_cycle_yeelight/2"><button type="button">Cycle All Bureau</button></a>
+    <br>
+    <br>
+    <a href="/stop_color_cycle_yeelight/0"><button type="button">Stop Cycle Bureau</button></a>
+    <a href="/stop_color_cycle_yeelight/1"><button type="button">Stop Cycle Bureau Etagère</button></a>
+    <a href="/stop_color_cycle_yeelight/2"><button type="button">Stop Cycle All Bureau</button></a>
+
+
+<h1>BOUTONS INUTILES</h1>
+
+    <a href="/start_yeelight/0"><button type="button">On Bureau </button></a>
+    <a href="/stop_yeelight/0"><button type="button">Off Bureau</button></a>
+    <a href="/start_yeelight/1"><button type="button">On Bureau Etagère</button></a>
+    <a href="/stop_yeelight/1"><button type="button">Off Bureau Etagère</button></a>
+
+    <div>
+        <input type="color" id="rgb" value="#ffffff">
+    </div>
+    
+    <script>
+    
+        var colorPicker = document.getElementById("rgb");
+        colorPicker.addEventListener("change", watchColorPicker, false);
+    
+        function watchColorPicker(event)
+        {
+            var req = new XMLHttpRequest();
+            var rgb_col = document.getElementById("rgb").value;
+            var url = "/start_color_cycle_yeelight/2/" + rgb_col.slice(1);
+            req.open("GET", url, true);
+            req.send(null);
+        }
+    
+    </script>
+
+<label class='toggle-label'>
+    <input type='checkbox'/>
+        <span class='back'>
+           <span class='toggle'></span>
+            <span class='label on'>ON</span>
+           <span class='label off'>OFF</span>  
+       </span>
+   </label>
+
+</body>
+
+</html>
+
