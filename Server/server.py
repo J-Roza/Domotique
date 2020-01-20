@@ -2,8 +2,13 @@ from flask import Flask
 from flask import render_template
 from yeelight import Bulb, RGBTransition, Flow, transitions, SleepTransition
 
+
+
+
 bulb0 = Bulb("192.168.1.181", auto_on=True)
 bulb1 = Bulb("192.168.1.182", auto_on=True)
+
+bulb_list = [bulb0, bulb1, ]
 
 app = Flask(__name__)
 
@@ -23,9 +28,9 @@ def test():
 def new():
     return render_template('new.html')
 
-@app.route('/new_2')
-def new_2():
-    return render_template('new_2.html')
+@app.route('/salon')
+def salon():
+    return render_template('salon.html')
 
 
 
@@ -36,13 +41,9 @@ def new_2():
 @app.route('/toggle_yeelight/<int:id_bulb>')
 def toggle_yeelight(id_bulb=None):
     if id_bulb != None:
-        if id_bulb == 0:
-            bulb0.toggle(effect="sudden")
-        elif id_bulb == 1:
-            bulb1.toggle(effect="sudden")
-        elif id_bulb == 2:
-            bulb0.toggle(effect="sudden")
-            bulb1.toggle(effect="sudden")    
+        for i, bulb in enumerate(bulb_list):
+            if i == id_bulb:
+                bulb.toggle(effect="sudden")
     return ('', 204)
 
 
@@ -140,6 +141,7 @@ def rgb_yeelight(id_bulb=None, rgb_value="ffffff"):
         elif id_bulb == 2:
             bulb0.set_rgb(r_color, g_color, b_color, effect="sudden")
             bulb1.set_rgb(r_color, g_color, b_color, effect="sudden")
+            
 
     return ('', 204)
 

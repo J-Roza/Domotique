@@ -1,0 +1,25 @@
+<!doctype html>
+<head>
+    <title>Salon</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/salon.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='js/salon.js') }}"></script>   
+</head>
+<body>
+
+    <div id="clock_div">
+        <canvas id="canvas" width="180" height="180"
+            style="background-color:#086d4f">   
+        </canvas>
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            radius = radius * 0.90
+            setInterval(drawClock, 1000);
+        </script>
+    </div>
+ 
+</body>
+</html>

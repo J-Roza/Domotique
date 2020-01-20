@@ -1,0 +1,16 @@
+body
+{
+  
+   background-image: url( ../img/living_back.png );
+   background-repeat: no-repeat;
+   background-size: 100%;
+   background-position: 50% 0%;
+   background-color: #086d4f;
+   background-attachment: scroll;
+}
+
+#clock_div
+{
+   position: absolute;
+   top: 5%; left: 66%;
+}

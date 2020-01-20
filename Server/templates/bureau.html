@@ -1,48 +1,40 @@
 <!doctype html>
-   
 <head>
     <title>Bureau</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bureau.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bureau.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bureau.js') }}"></script>
+    
 </head>
 <body>
-
-<h1 align="center">Bureau</h1>
-
-<div id="main_div"> 
-
-    <div class="buttons_div"> 
-        <div class="center">  
-            <a href="/toggle_yeelight/0"><button type="button">Toggle Bureau</button></a>        
-            <a href="/toggle_yeelight/1"><button type="button">Toggle Bureau Etagère</button></a>
-            <a href="/toggle_yeelight/2"><button type="button">Toggle All Bureau</button></a> 
-            <br>   
-            <br>   
-            <div>
-                <input type="color" id="rgb" value="#ffffff">
-            </div>   
-            
-    <script>
-    
-        var colorPicker = document.getElementById("rgb");
-        colorPicker.addEventListener("change", watchColorPicker, false);
-    
-        function watchColorPicker(event)
-        {
-            var req = new XMLHttpRequest();
-            var rgb_col = document.getElementById("rgb").value;
-            var url = "/start_color_cycle_yeelight/2/" + rgb_col.slice(1);
-            req.open("GET", url, true);
-            req.send(null);
-        }
-    
-    </script>     
-            <br> 
-            <a href="/"><button type="button">Retour</button></a> 
-        </div>
+    <div id="container">
+        <div>
+            <button type="button" onclick="toggle_bureau()">Allumer le Bureau</button>  
+            <input type="color" id="rgb" value="#ffffff">
+            <script>
+                var colorPicker = document.getElementById("rgb");
+                colorPicker.addEventListener("change", watchColorPicker, false);
+            </script>
+        </div>        
+    </div> 
+    <div id="clock_div">
+        <canvas id="canvas" width="200" height="200"
+            style="background-color:#89c5cd">   
+        </canvas>
+        <script>
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var radius = canvas.height / 2;
+            ctx.translate(radius, radius);
+            radius = radius * 0.90
+            setInterval(drawClock, 1000);
+        </script>
     </div>
-
+    
+    <div id="bulb_div_0"></div>
+    <div id="bulb_div_1"></div>
 </body>
+<div id="back_div">
+    <a href="/"><button type="button">Retour</button></a>  
+</div> 
 </html>
-
-

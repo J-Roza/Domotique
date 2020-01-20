@@ -5,14 +5,20 @@
         <meta charset="utf8">
         <title>NEW</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css') }}">
+
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
     </head>
     <body>
         <div class="center">
-            <input type="checkbox" onchange="checkFluency()" id="fluency">
+            <div class="center" id="fluency_div">
+            </div>
+           
 
 
             <script>   
-                 
+                window.onload = check_state();
                 function check_state()
                 {
                     var url = "/check_state_yeelight/";
@@ -26,7 +32,10 @@
                         response.json().then(function(data) 
                         {
                             console.log(data.properties.bulb0.power, data.properties.bulb1.power);
-                            //TODO use data to set button's state 
+                            var state_bulb0 = data.properties.bulb0.power;
+                            var state_bulb1 = data.properties.bulb1.power;
+
+                            handle_state(state_bulb0, state_bulb1) 
                         });
                     })
                         .catch(function(error) 
@@ -34,8 +43,22 @@
                             console.log("Fetch error: " + error);
                         });
                 };
+                
+                function handle_state(state_bulb0, state_bulb1) 
+                {
+                    var checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.onchange = "checkFluency()";
+                    checkbox.id = "fluency";
+                    if (state_bulb0 == "on" && state_bulb1 == "on")
+                        checkbox.checked = true;
+                    else 
+                        checkbox.checked = false;
+                    var fluency_div = document.getElementById("fluency_div");
+                    fluency_div.append(checkbox);
+                }
 
-                window.onload = check_state();
+                
                          
                 function checkFluency()                
                 {
@@ -59,6 +82,22 @@
                 }
             </script>
 
+            <h1>Round Range Slider</h1>
+
+            <div class="slidecontainer">
+                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                <p>Value: <span id="demo"></span></p>
+            </div>
+
+            <script>
+                var slider = document.getElementById("myRange");
+                var output = document.getElementById("demo");
+                output.innerHTML = slider.value;
+
+                slider.oninput = function() {
+                output.innerHTML = this.value;
+                }
+            </script>
         <br>
         <br> 
         <br> 
