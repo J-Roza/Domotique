@@ -1,4 +1,88 @@
+function toggle_bureau()
+{
+    var url = "/toggle_yeelight/0";
+    call_url(url);
+    url = "/toggle_yeelight/1";
+    call_url(url);
+}
 
+function call_url(url)
+{
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    req.send(null);
+}
+
+window.onload = check_state();
+function check_state()
+{
+    var url = "/check_state_yeelight/";
+    fetch(url).then(function(response) 
+    {
+        if (response.status !== 200) 
+        {
+            console.log(`Looks like there was a problem. Status code: ${response.status}`);
+            return;
+        }
+        response.json().then(function(data) 
+        {
+            console.log(data.properties.bulb2.power);
+            //bulb salon
+            var state_bulb2 = data.properties.bulb2.power;
+            var state_arr = [state_bulb2];
+            handle_state(state_arr);
+        });
+    })
+        .catch(function(error) 
+        {
+            console.log("Fetch error: " + error);
+        });
+};
+
+//envoi url pour allumer les bulbs et refresh la page 
+function create_img(path, id_bulb)
+{ 
+    var img = document.createElement('img');
+    img.src = path;
+    img.onclick = function()                        
+    {
+        call_url("/toggle_yeelight/" + id_bulb);
+        // Recharge la page actuelle, sans utiliser le cache
+        document.location.reload(true);
+    };
+    return img;
+}
+
+//Créé et Change img en fonction de l'etat (on/off)
+function handle_state(state_bulb_list) 
+{
+    for (i = 0; i < state_bulb_list.length; i++)
+    {
+        i += 2;
+        var img = document.createElement('img');
+        img = create_img("/static/img/light_bulb_" + state_bulb_list[i] + "_" + i + ".png", i);                  
+        document.getElementById("bulb_div_" + i).appendChild(img);
+    };
+    
+} 
+
+
+//Variateur de couleur
+function watchColorPicker(event)
+{
+    var rgb_col = document.getElementById("rgb").value;
+    call_url("/start_color_cycle_yeelight/0/" + rgb_col.slice(1));
+    call_url("/start_color_cycle_yeelight/1/" + rgb_col.slice(1));
+}
+
+
+
+
+
+
+
+
+//Horloge
 function drawClock() 
 {
   drawFace(ctx, radius);

@@ -4,11 +4,11 @@ from yeelight import Bulb, RGBTransition, Flow, transitions, SleepTransition
 
 
 
-
 bulb0 = Bulb("192.168.1.181", auto_on=True)
 bulb1 = Bulb("192.168.1.182", auto_on=True)
+bulb2 = Bulb("192.168.1.183", auto_on=True)
 
-bulb_list = [bulb0, bulb1, ]
+bulb_list = [bulb0, bulb1, bulb2]
 
 app = Flask(__name__)
 
@@ -19,6 +19,10 @@ def index():
 @app.route('/bureau')
 def bureau():    
     return (render_template('bureau.html'), 200)
+
+@app.route('/bureau_mobile')
+def bureau_mobile():    
+    return (render_template('mobile/bureau_mobile.html'), 200)
 
 @app.route('/test_page')
 def test():
@@ -118,9 +122,12 @@ def check_state():
     properties = {}
     properties["bulb0"] = bulb0.get_properties()
     properties["bulb1"] = bulb1.get_properties()
+    properties["bulb2"] = bulb2.get_properties()
+
     return {"properties": properties}, 200
 
-
+for i, elem in enumerate(bulb_list):
+    print(i, elem)
 
 
 #Set RGB Color
@@ -149,4 +156,4 @@ def rgb_yeelight(id_bulb=None, rgb_value="ffffff"):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True,host="0.0.0.0", port="5000")

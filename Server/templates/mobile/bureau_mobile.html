@@ -1,0 +1,23 @@
+<!doctype html>
+   
+<head>
+    <title>Bureau</title>
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bureau_mobile.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bureau.js') }}"></script>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+</head>
+<body>
+    <div id="container">
+        <button type="button" onclick="toggle_bureau()">Allumer le Bureau</button>  
+        <input type="color" id="rgb" value="#ffffff">
+        <script>
+            var colorPicker = document.getElementById("rgb");
+            colorPicker.addEventListener("change", watchColorPicker, false);
+        </script>     
+        <a href="\">
+            <img src="static\img\back.png" width="70" height="70" alt="Retour" title="Retour">
+        </a>
+    </div>    
+</body>
+</html>

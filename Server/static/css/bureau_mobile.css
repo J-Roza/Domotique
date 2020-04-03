@@ -1,0 +1,16 @@
+body
+{
+   background-color:rgb(33, 160, 199);
+}
+
+#container 
+{
+   display: flex;
+   height: 500px;
+   width: 100%;
+   padding: 0;
+   margin: 0;
+   justify-content: space-around;
+   flex-direction: column;
+   align-items: center;
+}

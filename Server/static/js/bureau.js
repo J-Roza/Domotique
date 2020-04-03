@@ -57,7 +57,7 @@ function create_img(path, id_bulb)
 }
 
 //Créé et Change img en fonction de l'etat (on/off)
-function handle_state(state_bulb_list, img_list) 
+function handle_state(state_bulb_list) 
 {
     for (i = 0; i < state_bulb_list.length; i++)
     {
@@ -68,6 +68,8 @@ function handle_state(state_bulb_list, img_list)
     
 } 
 
+
+//Variateur de couleur
 function watchColorPicker(event)
 {
     var rgb_col = document.getElementById("rgb").value;

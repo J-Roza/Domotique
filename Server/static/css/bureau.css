@@ -2,18 +2,16 @@ body
 {
    background-image: url( ../img/desk_back.png );
    background-repeat: no-repeat;
-   background-size: 95%;
-   background-position: 50% 0%;
-   background-color: #89c5cd;
-   background-attachment: scroll;
-   resize: none;
-   overflow: scroll;s
+   background-size: cover;
+   background-position: top;
+   overflow: hidden;
+     
 }
 
 #container 
 {
    position: absolute;
-   top: 65%; left: 42%;  
+   top: 63%; left: 42%;  
 }
 
 #container > div 
@@ -25,26 +23,28 @@ body
    flex-direction: row;
 }
 
-#back_div
-{
-   position: absolute;
-   top: 95%; left: 48%;
-}
-
 #bulb_div_1
 {
    position: absolute;
-   top: 10%; left: 75%;
+   top: 9%; left: 68%;
 }
 
 #bulb_div_0
 {
    position: absolute;
-   top: 28%; left: 0.5%;
+   top: 28%; left: -1%;
 }
 
 #clock_div
 {
    position: absolute;
-   top: 5%; left: 60%;
+   top: 5%; left: 55%;
 }
+
+#door_div
+{
+   position: absolute;
+   top: 50%; left: 86%;
+}
+
+

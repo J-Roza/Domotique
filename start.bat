@@ -1,3 +1,3 @@
 python Server/server.py
-pause>nul
+pause
 @echo off

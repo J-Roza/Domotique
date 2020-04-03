@@ -1,107 +1,25 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+ <head>
+   <meta charset="utf-8">
+   <title>Flask Parent Template</title>
    
-    <head>
-        <meta charset="utf8">
-        <title>NEW</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/new.css') }}">
-
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-    </head>
-    <body>
-        <div class="center">
-            <div class="center" id="fluency_div">
-            </div>
-           
-
-
-            <script>   
-                window.onload = check_state();
-                function check_state()
-                {
-                    var url = "/check_state_yeelight/";
-                    fetch(url).then(function(response) 
-                    {
-                        if (response.status !== 200) 
-                        {
-                            console.log(`Looks like there was a problem. Status code: ${response.status}`);
-                            return;
-                        }
-                        response.json().then(function(data) 
-                        {
-                            console.log(data.properties.bulb0.power, data.properties.bulb1.power);
-                            var state_bulb0 = data.properties.bulb0.power;
-                            var state_bulb1 = data.properties.bulb1.power;
-
-                            handle_state(state_bulb0, state_bulb1) 
-                        });
-                    })
-                        .catch(function(error) 
-                        {
-                            console.log("Fetch error: " + error);
-                        });
-                };
-                
-                function handle_state(state_bulb0, state_bulb1) 
-                {
-                    var checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.onchange = "checkFluency()";
-                    checkbox.id = "fluency";
-                    if (state_bulb0 == "on" && state_bulb1 == "on")
-                        checkbox.checked = true;
-                    else 
-                        checkbox.checked = false;
-                    var fluency_div = document.getElementById("fluency_div");
-                    fluency_div.append(checkbox);
-                }
-
-                
-                         
-                function checkFluency()                
-                {
-                    var checkbox = document.getElementById('fluency');
-                    
-
-                    if (checkbox.checked == true) 
-                    {
-                        var req = new XMLHttpRequest();
-                        var url = "/start_yeelight/2";
-                        req.open("GET", url, true);
-                        req.send(null);                        
-                    }
-                    else 
-                    {
-                        var req = new XMLHttpRequest();
-                        var url = "/stop_yeelight/2";
-                        req.open("GET", url, true);
-                        req.send(null);
-                    }
-                }
-            </script>
-
-            <h1>Round Range Slider</h1>
-
-            <div class="slidecontainer">
-                <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                <p>Value: <span id="demo"></span></p>
-            </div>
-
-            <script>
-                var slider = document.getElementById("myRange");
-                var output = document.getElementById("demo");
-                output.innerHTML = slider.value;
-
-                slider.oninput = function() {
-                output.innerHTML = this.value;
-                }
-            </script>
-        <br>
-        <br> 
-        <br> 
-        <a href="/"><button type="button">Retour</button></a> 
-    </body> 
-
+ </head>
+ <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">First Web App</h1>
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('bureau') }}">Bureau</a></li>
+            <li><a href="{{ url_for('salon') }}">salon</a></li>
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+    
+    {% block content %}
+    {% endblock %}
+    
+ </body>
 </html>
